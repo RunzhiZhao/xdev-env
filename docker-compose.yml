@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  db:
+    container_name: mysql-dev
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - ./config/initdb:/docker-entrypoint-initdb.d
+      - ./data/mysql:/var/lib/mysql
+      - ./logs/mysql:/var/log/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: 1234
+      TZ: Asia/Shanghai
+    ports:
+      - 3306:3306
+  
+  rd:
+    container_name: redis-dev
+    restart: always
+    image: redis:latest
+    ports:
+      - 6379:6379
